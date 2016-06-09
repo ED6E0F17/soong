@@ -23,7 +23,6 @@ import (
 
 var (
 	armToolchainCflags = []string{
-		"-mthumb-interwork",
 		"-msoft-float",
 	}
 
@@ -46,7 +45,6 @@ var (
 
 		// TARGET_RELEASE_CFLAGS
 		"-DNDEBUG",
-		"-g",
 		"-Wstrict-aliasing=2",
 		"-fgcse-after-reload",
 		"-frerun-cse-after-loop",
@@ -77,7 +75,7 @@ var (
 	}
 
 	armThumbCflags = []string{
-		"-mthumb",
+		"-marm",
 		"-Os",
 		"-fomit-frame-pointer",
 		"-fno-strict-aliasing",
@@ -93,9 +91,12 @@ var (
 			"-D__ARM_ARCH_5TE__",
 		},
 		"armv7-a": []string{
-			"-march=armv7-a",
+			"-D__ARM_ARCH_6__",
+			"-D__ARM_ARCH_6KZ__",
+			"-march=armv6j",
+			"-mfpu=vfp",
+			"-mtune=arm1176jzf-s",
 			"-mfloat-abi=softfp",
-			"-mfpu=vfpv3-d16",
 		},
 		"armv7-a-neon": []string{
 			"-mfloat-abi=softfp",
@@ -378,7 +379,7 @@ func armToolchainFactory(arch android.Arch) Toolchain {
 		toolchainClangCflags = append(toolchainClangCflags,
 			variantOrDefault(armClangCpuVariantCflagsVar, arch.CpuVariant))
 	case "armv7-a":
-		fixCortexA8 = "-Wl,--fix-cortex-a8"
+		// Arm v6 goes here.
 	case "armv5te":
 		// Nothing extra for armv5te
 	default:
