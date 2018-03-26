@@ -93,9 +93,10 @@ var (
 			"-D__ARM_ARCH_5TE__",
 		},
 		"armv7-a": []string{
-			"-march=armv7-a",
+			"-march=armv6k",
 			"-mfloat-abi=softfp",
-			"-mfpu=vfpv3-d16",
+			"-mtune=arm1176jzf-s",
+			"-mfpu=vfp",
 		},
 		"armv7-a-neon": []string{
 			"-mfloat-abi=softfp",
